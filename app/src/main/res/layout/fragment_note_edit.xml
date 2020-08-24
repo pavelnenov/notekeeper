@@ -5,33 +5,38 @@
     android:id="@+id/hello_text"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".NoteEditFragment">
+
+    <TextView
+        android:id="@+id/addOrEditNoteTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/add_or_edit"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FF5722"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerCourses"
         style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="85dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="32dp"
         android:accessibilityLiveRegion="assertive"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/addOrEditNoteTitle"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/addOrEditNoteTitle"
+        app:layout_constraintTop_toBottomOf="@+id/addOrEditNoteTitle" />
 
     <EditText
         android:id="@+id/textNoteTitle"
@@ -59,5 +64,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/spinnerCourses"
         app:layout_constraintTop_toBottomOf="@+id/textNoteTitle" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="@+id/textNoteText"
+        app:layout_constraintStart_toStartOf="@+id/textNoteText"
+        app:layout_constraintTop_toBottomOf="@+id/textNoteText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
