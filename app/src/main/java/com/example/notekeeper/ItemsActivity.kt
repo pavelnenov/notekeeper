@@ -4,8 +4,6 @@ import android.content.ContentProvider
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +17,11 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notekeeper.data.DataManager
+import com.example.notekeeper.db.NotesDatabase
+import com.example.notekeeper.db.dao.CourseDao
+import com.example.notekeeper.db.dao.NoteDao
+import com.example.notekeeper.db.entity.CourseInfo
+import com.example.notekeeper.db.entity.NoteInfo
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_items.*
 import kotlinx.android.synthetic.main.app_bar_items.*
@@ -30,6 +33,8 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class ItemsActivity : AppCompatActivity() {
 
@@ -41,10 +46,26 @@ class ItemsActivity : AppCompatActivity() {
 
     private val courseLayoutManager by lazy { GridLayoutManager(this, 2) }
 
-    private val courseRecyclerAdapter by lazy { CourseRecyclerAdapter(this, DataManager.courses.values.toList()) }
+    private val courseRecyclerAdapter by lazy { CourseRecyclerAdapter(this, DataManager.courses) }
+
+    private lateinit var noteDao : NoteDao
+    private lateinit var courseDao: CourseDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = NotesDatabase(this)
+        val dbManager = DataManager(db)
+        noteDao = db.noteDao()
+        courseDao = db.courseDao()
+
+        var courses: List<CourseInfo>
+        var notes: List<NoteInfo>
+        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
+        val dbPath = getDatabasePath("notes_db").absolutePath
+
+        Thread{ courses = db.courseDao().getAllCourses() }.start()
+        Thread{ notes = db.noteDao().getAllNotes() }.start()
 
         setContentView(R.layout.activity_items)
         val toolbar: Toolbar = findViewById(R.id.toolbar)

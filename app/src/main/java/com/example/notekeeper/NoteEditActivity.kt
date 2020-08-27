@@ -8,9 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.example.notekeeper.data.CourseInfo
-import com.example.notekeeper.data.DataManager
-import com.example.notekeeper.data.NoteInfo
 import kotlinx.android.synthetic.main.activity_note_edit.*
 import kotlinx.android.synthetic.main.content_note_edit.*
 import kotlinx.android.synthetic.main.content_note_list.*

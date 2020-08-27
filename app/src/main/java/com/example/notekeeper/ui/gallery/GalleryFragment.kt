@@ -14,10 +14,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        galleryViewModel =
-            ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        galleryViewModel =
+//            ViewModelProviders.of(this).get(GalleryViewModel::class.java)
+//        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
     }
 }

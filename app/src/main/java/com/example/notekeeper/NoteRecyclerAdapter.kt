@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notekeeper.data.NoteInfo
+import com.example.notekeeper.db.entity.NoteInfo
 import kotlinx.android.synthetic.main.item_note_list.view.*
 
 class NoteRecyclerAdapter(private val context: Context, private val notes: List<NoteInfo>) :

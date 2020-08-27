@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
-import com.example.notekeeper.data.CourseInfo
 import com.example.notekeeper.data.DataManager
-import com.example.notekeeper.data.NoteInfo
+import com.example.notekeeper.db.entity.CourseInfo
+import com.example.notekeeper.db.entity.NoteInfo
 import kotlinx.android.synthetic.main.fragment_note_edit.*
 
 
@@ -32,7 +32,8 @@ class NoteEditFragment : Fragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        if (notePosition >= DataManager.notes.lastIndex) {
+        //TODO
+        if (notePosition >= 5) {
             val menuItem : MenuItem = menu.findItem(R.id.action_next)
             menuItem.icon = activity?.applicationContext?.let { ContextCompat.getDrawable(it, R.drawable.ic_baseline_block_24) }
             menuItem.isEnabled = false
@@ -81,7 +82,7 @@ class NoteEditFragment : Fragment() {
             ArrayAdapter<CourseInfo>(
                 it,
                 android.R.layout.simple_spinner_item,
-                DataManager.courses.values.toList()
+                DataManager.courses.toList() //TODO
             )
         }
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -107,7 +108,7 @@ class NoteEditFragment : Fragment() {
         val currentTitle = textNoteTitle.text.toString()
         val currentNote = textNoteText.text.toString()
 
-        val noteInfo = NoteInfo(currentCourseTitle, currentTitle, currentNote)
+        val noteInfo = NoteInfo(0, currentCourseTitle, currentTitle, currentNote)
         if (notePosition >= 0) {
             DataManager.notes[notePosition] = noteInfo
         } else {
@@ -129,11 +130,11 @@ class NoteEditFragment : Fragment() {
 
     private fun displayNote() {
         val note = DataManager.notes[notePosition]
-        textNoteTitle.setText(note.title)
+        textNoteTitle.setText(note.noteTitle)
         textNoteText.setText(note.text)
 
         val coursePosition =
-            DataManager.courses.values.withIndex().first {
+            DataManager.courses.withIndex().first {
                 it.value.title == note.courseTitle
             }.index
 

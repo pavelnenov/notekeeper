@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notekeeper.data.CourseInfo
+import com.example.notekeeper.db.entity.CourseInfo
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_course_list.view.*
 
