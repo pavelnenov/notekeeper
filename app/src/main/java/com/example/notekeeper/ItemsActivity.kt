@@ -23,6 +23,7 @@ import com.example.notekeeper.db.dao.NoteDao
 import com.example.notekeeper.db.entity.CourseInfo
 import com.example.notekeeper.db.entity.NoteInfo
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_items.*
 import kotlinx.android.synthetic.main.app_bar_items.*
 import kotlinx.android.synthetic.main.content_items.*
@@ -35,8 +36,13 @@ import java.io.IOException
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ItemsActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var db : NotesDatabase
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -54,7 +60,8 @@ class ItemsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = NotesDatabase(this)
+        print("")
+//        val db = NotesDatabase(this)
         val dbManager = DataManager(db)
         noteDao = db.noteDao()
         courseDao = db.courseDao()
