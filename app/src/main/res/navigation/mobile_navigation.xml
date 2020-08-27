@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_courses"
         android:name="com.example.notekeeper.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_courses"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
