@@ -1,7 +1,9 @@
 package com.example.notekeeper.di
 
 import android.content.Context
+import com.example.notekeeper.data.DataManager
 import com.example.notekeeper.db.NotesDatabase
+import com.example.notekeeper.db.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,9 +15,20 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 class DatabaseProvider {
 
-//    @Singleton
+    @Singleton
     @Provides
-    fun provideDatabasa(@ApplicationContext context: Context) :NotesDatabase {
-        return NotesDatabase(context)
-    }
+    fun provideDatabase(@ApplicationContext context: Context): NotesDatabase = NotesDatabase(context)
+
+    @Singleton
+    @Provides
+    fun provideDataManager(repository: Repository) : DataManager = DataManager(repository)
+
+    @Singleton
+    @Provides
+    fun provideCoursesDao(db: NotesDatabase) = db.courseDao()
+
+    @Singleton
+    @Provides
+    fun provideNotesDao(db: NotesDatabase) = db.noteDao()
+
 }

@@ -1,13 +1,17 @@
 package com.example.notekeeper.data
 
 import com.example.notekeeper.db.NotesDatabase
+import com.example.notekeeper.db.Repository
 import com.example.notekeeper.db.entity.CourseInfo
 import com.example.notekeeper.db.entity.NoteInfo
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class DataManager(val db: NotesDatabase) {
+class DataManager @Inject constructor(val repository: Repository) {
 
     companion object {
-        private val LOCK = Any()
         var courses = mutableListOf<CourseInfo>()
         var notes = mutableListOf<NoteInfo>()
     }
@@ -17,13 +21,7 @@ class DataManager(val db: NotesDatabase) {
         initialiseCourses()
     }
 
-    fun execute(runnable : Runnable){
-        synchronized(LOCK) {
-            Thread(runnable).start()
-        }
-    }
-
-    private fun initialiseCourses() {
+    private fun initialiseCourses() = runBlocking {
         courses.run {
             add(CourseInfo(1, "android_intent", "Android programming with intents"))
             add(CourseInfo(2, "android_async", "Async Android programming and services"))
@@ -47,16 +45,15 @@ class DataManager(val db: NotesDatabase) {
             add(NoteInfo(8, courses[7].title, "Java Lang", "NIO is next gen IO"))
         }
 
-        val t = Thread {
-            db.courseDao().insertCourses(courses)
-            db.noteDao().insertNotes(notes)
-        }.apply {
-            isDaemon = true
-            name = "Paf Thread"
+
+        launch {
+            repository.courseDao.insertCourses(courses)
+            repository.notesDao.insertNotes(notes)
+            delay(500L)
+
         }
-        synchronized(LOCK) {
-            t.start()
-        }
-        print("")
+
+        delay(100L)
+        println("Task from coroutine scope") // This line will be printed before the nested launch
     }
 }

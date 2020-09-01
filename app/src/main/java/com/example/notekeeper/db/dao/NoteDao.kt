@@ -13,21 +13,21 @@ import com.example.notekeeper.db.entity.NoteInfo
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNotes(vararg notes: NoteInfo)
+    suspend fun insertNotes(vararg notes: NoteInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNotes(notes: List<NoteInfo>)
+    suspend fun insertNotes(notes: List<NoteInfo>)
 
     @Query("SELECT * FROM noteinfo")
-    fun getAllNotes() : List<NoteInfo>
+    suspend fun getAllNotes() : List<NoteInfo>
 
     @Query("SELECT * FROM noteinfo WHERE courseTitle = :courseTitle")
-    fun getNoteByCourseTitle(courseTitle : String) : List<NoteInfo>
+    suspend fun getNoteByCourseTitle(courseTitle : String) : List<NoteInfo>
 
     @Query("SELECT * FROM noteinfo WHERE noteTitle = :noteTitle")
-    fun getNoteByNoteTitle(noteTitle : String) : NoteInfo
+    suspend fun getNoteByNoteTitle(noteTitle : String) : NoteInfo
 
     @Transaction
     @Query("SELECT * FROM courseinfo WHERE title = :courseTitle")
-    fun getNotesForCourses(courseTitle: String) : List<CourseWithNotes>
+    suspend fun getNotesForCourses(courseTitle: String) : List<CourseWithNotes>
 }

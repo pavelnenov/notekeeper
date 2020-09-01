@@ -1,6 +1,7 @@
 package com.example.notekeeper.db
 
 import android.content.Context
+import android.os.Debug
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -28,8 +29,11 @@ abstract class NotesDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext, NotesDatabase::class.java, DATABASE_NAME)
-                .build()
+            Room.databaseBuilder(context.applicationContext, NotesDatabase::class.java, DATABASE_NAME).apply {
+                if (Debug.isDebuggerConnected()) {
+                    allowMainThreadQueries()
+                }
+            }.build()
     }
 
 }

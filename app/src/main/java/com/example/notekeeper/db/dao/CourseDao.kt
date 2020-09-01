@@ -10,19 +10,19 @@ import com.example.notekeeper.db.entity.NoteInfo
 @Dao
 interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCourses(vararg  courses: CourseInfo)
+    suspend fun insertCourses(vararg  courses: CourseInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCourses(courses: List<CourseInfo>)
+    suspend fun insertCourses(courses: List<CourseInfo>)
 
     @Query("SELECT * FROM courseinfo")
-    fun getAllCourses() : List<CourseInfo>
+    suspend fun getAllCourses() : List<CourseInfo>
 
     @Query("SELECT * FROM courseinfo where title = :courseTitle")
-    fun getCourseByCourseTitle(courseTitle : String) : List<CourseInfo>
+    suspend fun getCourseByCourseTitle(courseTitle : String) : List<CourseInfo>
 
     @Query("SELECT * FROM courseinfo where courseInfoId = :courseId")
-    fun getNoteByCourseId(courseId : String) : List<CourseInfo>
+    suspend fun getNoteByCourseId(courseId : String) : List<CourseInfo>
 
 
 }

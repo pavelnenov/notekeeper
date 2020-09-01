@@ -1,27 +1,20 @@
 package com.example.notekeeper
 
-import android.content.ContentProvider
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notekeeper.data.DataManager
-import com.example.notekeeper.db.NotesDatabase
-import com.example.notekeeper.db.dao.CourseDao
-import com.example.notekeeper.db.dao.NoteDao
-import com.example.notekeeper.db.entity.CourseInfo
-import com.example.notekeeper.db.entity.NoteInfo
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_items.*
@@ -34,45 +27,25 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import java.util.concurrent.ArrayBlockingQueue
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemsActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var db : NotesDatabase
+    lateinit var noteRecyclerAdapter: NoteRecyclerAdapter
+
+    @Inject
+    lateinit var courseRecyclerAdapter : CourseRecyclerAdapter
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val noteLayoutManager by lazy { LinearLayoutManager(this) }
 
-    private val noteRecyclerAdapter by lazy { NoteRecyclerAdapter(this, DataManager.notes) }
-
     private val courseLayoutManager by lazy { GridLayoutManager(this, 2) }
-
-    private val courseRecyclerAdapter by lazy { CourseRecyclerAdapter(this, DataManager.courses) }
-
-    private lateinit var noteDao : NoteDao
-    private lateinit var courseDao: CourseDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        print("")
-//        val db = NotesDatabase(this)
-        val dbManager = DataManager(db)
-        noteDao = db.noteDao()
-        courseDao = db.courseDao()
-
-        var courses: List<CourseInfo>
-        var notes: List<NoteInfo>
-        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-        val dbPath = getDatabasePath("notes_db").absolutePath
-
-        Thread{ courses = db.courseDao().getAllCourses() }.start()
-        Thread{ notes = db.noteDao().getAllNotes() }.start()
 
         setContentView(R.layout.activity_items)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -130,29 +103,6 @@ class ItemsActivity : AppCompatActivity() {
         super.onResume()
         listItems.adapter?.notifyDataSetChanged()
 
-        val client = OkHttpClient()
-        val request = Request.Builder().url("http://10.0.2.2:8080").build()
-//        val request = Request.Builder().url("https://reqres.in/api/users?page=2").build()
-
-        val queue = ArrayBlockingQueue<String>(1)
-        client.newCall(request).enqueue(object: Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                println("Error")
-                queue.add(e.stackTrace.contentToString())
-                Snackbar.make(listItems, e.stackTrace.contentToString(), Snackbar.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    queue.add(body)
-                    runOnUiThread {Snackbar.make(listItems, body ?: "", Snackbar.LENGTH_LONG).show()}
-
-                } else {
-                    queue.add("not successful")
-                }
-            }
-        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

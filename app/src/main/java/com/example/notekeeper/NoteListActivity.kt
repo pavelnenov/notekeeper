@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notekeeper.data.DataManager
 import kotlinx.android.synthetic.main.activity_note_list.fab
 import kotlinx.android.synthetic.main.content_note_list.*
+import javax.inject.Inject
 
 class NoteListActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var noteRecyclerAdapter: NoteRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +33,7 @@ class NoteListActivity : AppCompatActivity() {
 //        }
 
         listItems.layoutManager = LinearLayoutManager(this)
-        listItems.adapter = NoteRecyclerAdapter(this, DataManager.notes)
-
+        listItems.adapter = noteRecyclerAdapter
     }
 
     override fun onResume() {

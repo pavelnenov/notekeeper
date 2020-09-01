@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notekeeper.db.Repository
 import com.example.notekeeper.db.entity.CourseInfo
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.android.synthetic.main.item_course_list.view.*
+import javax.inject.Inject
 
-class CourseRecyclerAdapter(context: Context, private val courses: List<CourseInfo>) :
+class CourseRecyclerAdapter @Inject constructor(@ApplicationContext context: Context, repository: Repository) :
     RecyclerView.Adapter<CourseRecyclerAdapter.ViewHolder>() {
+
+    private val courses = repository.getCourses()
 
     private val layoutInflater = LayoutInflater.from(context);
 
