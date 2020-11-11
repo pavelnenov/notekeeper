@@ -12,15 +12,22 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.example.notekeeper.data.DataManager
+import com.example.notekeeper.db.Repository
 import com.example.notekeeper.db.entity.CourseInfo
 import com.example.notekeeper.db.entity.NoteInfo
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_edit.*
+import javax.inject.Inject
 
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class NoteEditFragment : Fragment() {
+
+    @Inject
+    lateinit var repository: Repository
 
     var notePosition = POSITION_NOT_SET
     var addOrEditNote = ""

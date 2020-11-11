@@ -14,6 +14,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.notekeeper.data.DataManager
+import com.example.notekeeper.db.Repository
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +40,9 @@ class ItemsActivity : AppCompatActivity() {
     @Inject
     lateinit var courseRecyclerAdapter : CourseRecyclerAdapter
 
+    @Inject
+    lateinit var repository: Repository
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val noteLayoutManager by lazy { LinearLayoutManager(this) }
@@ -50,6 +55,7 @@ class ItemsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_items)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        val dataManager = DataManager(repository)
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {

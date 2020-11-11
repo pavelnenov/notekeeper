@@ -8,12 +8,19 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.example.notekeeper.db.Repository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_note_edit.*
 import kotlinx.android.synthetic.main.content_note_edit.*
 import kotlinx.android.synthetic.main.content_note_list.*
 import kotlinx.android.synthetic.main.fragment_note_edit.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NoteEditActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
