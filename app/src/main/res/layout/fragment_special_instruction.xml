@@ -5,31 +5,45 @@
     android:id="@+id/special_instruction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:backgroundTint="@color/bottom_sheet_color"
     android:clipToPadding="false"
+    android:maxHeight="120dp"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
     android:rotation="0"
     android:rotationX="0"
     android:rotationY="0"
     android:textAlignment="center"
-    app:behavior_peekHeight="150dp"
-    tools:context=".SpecialInstructionFragment"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="96dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:context=".SpecialInstructionFragment">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_drag_handle_24"
+        app:layout_constraintEnd_toEndOf="@+id/special_instruction_text1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/special_instruction_text1"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Placeholder1"
-
         android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
