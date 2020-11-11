@@ -21,4 +21,5 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_note_edit" />
+    <include layout="@layout/fragment_special_instruction" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

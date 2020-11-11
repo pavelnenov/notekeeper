@@ -2,6 +2,7 @@ package com.example.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,13 +11,18 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.example.notekeeper.data.DataManager
 import com.example.notekeeper.db.Repository
 import com.example.notekeeper.db.entity.CourseInfo
 import com.example.notekeeper.db.entity.NoteInfo
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.content_note_edit.*
 import kotlinx.android.synthetic.main.fragment_note_edit.*
+import kotlinx.android.synthetic.main.fragment_special_instruction.*
 import javax.inject.Inject
 
 
@@ -69,7 +75,6 @@ class NoteEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_note_edit, container, false)
     }
 
@@ -108,7 +113,16 @@ class NoteEditFragment : Fragment() {
             val intent = Intent(activity?.application, ItemsActivity::class.java)
             startActivity(intent)
         }
-    }
+
+//        val bottomSheet = SpecialInstructionFragment()
+//        special_button.setOnClickListener {
+//            bottomSheet.show(parentFragmentManager, "tag")
+//        }
+
+
+
+
+}
 
     private fun saveNote() : NoteInfo {
         val currentCourseTitle = spinnerCourses.selectedItem.toString()
