@@ -4,28 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import kotlinx.android.synthetic.main.fragment_special_instruction.*
+import okhttp3.internal.immutableListOf
 
 
-/**
- *
- * A fragment that shows a list of items as a modal bottom sheet.
- *
- * You can show this modal bottom sheet from your activity like this:
- * <pre>
- *    SpecialInstructionFragment.newInstance(30).show(supportFragmentManager, "dialog")
- * </pre>
- */
-class SpecialInstructionFragment : BottomSheetDialogFragment() {
+class SpecialInstructionFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_special_instruction, container, false)
+
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-////        special_instruction_text.text = "Lorem ipsum dolor sit amet"
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        pager.adapter = pagerAdapter
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = getItem().size
+
+        override fun createFragment(position: Int): Fragment = ScreenSlidePageFragment(getItem()[position])
+    }
+
+    private fun getItem() = immutableListOf("Lorem", "ipsum", "dolor", "sit", "amet", "consectetur")
 }

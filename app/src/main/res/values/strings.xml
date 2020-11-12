@@ -27,4 +27,5 @@
     <string name="title_activity_items2">ItemsActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="add_or_edit">Add or Edit</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet</string>
 </resources>
